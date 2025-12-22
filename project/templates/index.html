@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bosh sahifa - Yangiliklar.uz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Featured Section -->
+    <section class="featured-section">
+        <h2 class="section-title">Asosiy yangiliklar</h2>
+        <div class="featured-grid">
+            {% if featured_articles %}
+                <article class="featured-main">
+                    <a href="{% url 'project:article_detail' featured_articles.0.slug %}">
+                        {% if featured_articles.0.image %}
+                        <img src="{{ featured_articles.0.image.url }}" alt="{{ featured_articles.0.title }}">
+                        {% endif %}
+                        <div class="featured-content">
+                            <span class="category-badge">{{ featured_articles.0.category.name }}</span>
+                            <h3>{{ featured_articles.0.title }}</h3>
+                            <span class="date">{{ featured_articles.0.created_at|date:"d M, Y" }}</span>
+                        </div>
+                    </a>
+                </article>
+
+                <div class="featured-side">
+                    {% for article in featured_articles|slice:"1:3" %}
+                    <article class="featured-small">
+                        <a href="{% url 'project:article_detail' article.slug %}">
+                            {% if article.image %}
+                            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                            {% endif %}
+                            <div class="featured-content">
+                                <span class="category-badge">{{ article.category.name }}</span>
+                                <h3>{{ article.title }}</h3>
+                                <span class="date">{{ article.created_at|date:"d M, Y" }}</span>
+                            </div>
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Hozircha yangiliklar yo'q</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="content-wrapper">
+            <div class="news-grid">
+                {% for article in latest_articles %}
+                <article class="news-card">
+                    <a href="{% url 'project:article_detail' article.slug %}">
+                        {% if article.image %}
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                        {% endif %}
+                        <div class="news-card-content">
+                            <span class="category-badge">{{ article.category.name }}</span>
+                            <h3>{{ article.title }}</h3>
+                            <p class="news-excerpt">{{ article.summary|truncatewords:15 }}</p>
+                            <div class="news-meta">
+                                <span class="author">{{ article.author.username }}</span>
+                                <span class="date">{{ article.created_at|date:"d M, Y" }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% empty %}
+                <p>So'nggi yangiliklar yo'q</p>
+                {% endfor %}
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Ko'p o'qilgan</h3>
+                    <div class="widget-list">
+                        {% for article in popular_articles %}
+                        <article class="widget-item">
+                            <a href="{% url 'project:article_detail' article.slug %}">
+                                <span class="widget-number">{{ forloop.counter }}</span>
+                                <div class="widget-content">
+                                    <h4>{{ article.title|truncatewords:8 }}</h4>
+                                    <span class="widget-date">{{ article.created_at|date:"d M" }}</span>
+                                </div>
+                            </a>
+                        </article>
+                        {% empty %}
+                        <p>Yangiliklar yo'q</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+</div>
+{% endblock %}

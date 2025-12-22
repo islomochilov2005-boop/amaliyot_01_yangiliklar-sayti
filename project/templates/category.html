@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - Yangiliklar.uz{% endblock %}
+
+{% block content %}
+<div class="category-header">
+    <div class="container">
+        <h1>{{ category.name }}</h1>
+        <p>{{ category.name }} bo'yicha barcha yangiliklar</p>
+    </div>
+</div>
+
+<div class="container news-section">
+    <div class="news-grid">
+        {% for article in articles %}
+        <article class="news-card">
+            <a href="{% url 'project:article_detail' article.slug %}">
+                {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                {% endif %}
+                <div class="news-card-content">
+                    <span class="category-badge">{{ article.category.name }}</span>
+                    <h3>{{ article.title }}</h3>
+                    <p class="news-excerpt">{{ article.summary|truncatewords:15 }}</p>
+                    <div class="news-meta">
+                        <span class="author">{{ article.author.username }}</span>
+                        <span class="date">{{ article.created_at|date:"d M, Y" }}</span>
+                    </div>
+                </div>
+            </a>
+        </article>
+        {% empty %}
+        <p>Bu kategoriyada hozircha maqolalar yo'q</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

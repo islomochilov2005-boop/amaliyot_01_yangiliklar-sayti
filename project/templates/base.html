@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Yangiliklar.uz{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <a href="{% url 'project:index' %}">YANGILIKLAR.UZ</a>
+            </div>
+
+            <nav class="nav">
+                <a href="{% url 'project:index' %}" class="nav-link">Bosh sahifa</a>
+                {% for category in categories %}
+                <a href="{% url 'project:category' category.slug %}" class="nav-link">{{ category.name }}</a>
+                {% endfor %}
+                <a href="{% url 'project:about' %}" class="nav-link">Biz haqimizda</a>
+                <a href="{% url 'project:contact' %}" class="nav-link">Bog'lanish</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Qidirish...">
+                    <button>🔍</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Yangiliklar.uz</h3>
+                <p>O'zbekistonning eng ishonchli va zamonaviy yangiliklar portali.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Bo'limlar</h4>
+                <ul>
+                    {% for category in categories %}
+                    <li><a href="{% url 'project:category' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Ma'lumot</h4>
+                <ul>
+                    <li><a href="{% url 'project:about' %}">Biz haqimizda</a></li>
+                    <li><a href="{% url 'project:contact' %}">Bog'lanish</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Ijtimoiy tarmoqlar</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Telegram</a>
+                    <a href="#" class="social-link">Instagram</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Yangiliklar.uz. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

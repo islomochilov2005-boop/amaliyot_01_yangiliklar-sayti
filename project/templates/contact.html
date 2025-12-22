@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Biz bilan bog'lanish - Yangiliklar.uz{% endblock %}
+
+{% block content %}
+<div class="container about-page">
+    <header class="about-header">
+        <h1>Biz bilan bog'lanish</h1>
+        <p class="lead">Savol, taklif yoki mulohazalaringizni yuboring</p>
+    </header>
+
+    <div class="about-content">
+        <section class="about-section">
+            <h2>Bog'lanish ma'lumotlari</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Manzil:</strong>
+                    <p>Toshkent shahri, Amir Temur ko'chasi, 100-uy</p>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Telefon:</strong>
+                    <p>+998 71 123 45 67</p>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Email:</strong>
+                    <p>info@yangiliklar.uz</p>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Ish vaqti:</strong>
+                    <p>Dushanba - Juma: 9:00 - 18:00</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2>Xabar yuborish</h2>
+
+            {% if success %}
+            <div style="padding: 16px; background: #10b981; color: white; border-radius: 8px; margin-bottom: 20px;">
+                ✅ Xabaringiz muvaffaqiyatli yuborildi! Tez orada javob beramiz.
+            </div>
+            {% endif %}
+
+            <form method="post" class="contact-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="name">Ismingiz:</label>
+                    <input type="text" id="name" name="name" required class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Xabar:</label>
+                    <textarea id="message" name="message" rows="6" required class="form-textarea"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Yuborish</button>
+            </form>
+        </section>
+
+        <section class="about-section">
+            <h2>Reklama va hamkorlik</h2>
+            <p><strong>Email:</strong> reklama@yangiliklar.uz</p>
+            <p><strong>Telefon:</strong> +998 71 123 45 68</p>
+
+            <p>Biz bilan reklama va hamkorlik bo'yicha murojaat qilish uchun yuqoridagi aloqa ma'lumotlaridan foydalaning. Bizning jamoamiz sizga eng yaxshi takliflarni taqdim etishga tayyor.</p>
+        </section>
+
+        <section class="about-section">
+            <h2>Ijtimoiy tarmoqlarda</h2>
+            <div class="social-links">
+                <a href="#" class="social-link">Facebook</a>
+                <a href="#" class="social-link">Telegram</a>
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Twitter</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+.contact-form {
+    max-width: 600px;
+    margin: 24px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.form-textarea {
+    resize: vertical;
+}
+</style>
+{% endblock %}

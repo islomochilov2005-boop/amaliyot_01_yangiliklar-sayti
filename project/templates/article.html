@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ article.title }} - Yangiliklar.uz{% endblock %}
+
+{% block content %}
+<div class="container article-page">
+    <div class="article-wrapper">
+        <article class="article-main">
+            <div class="breadcrumb">
+                <a href="{% url 'project:index' %}">Bosh sahifa</a> /
+                <a href="{% url 'project:category' article.category.slug %}">{{ article.category.name }}</a> /
+                <span>{{ article.title|truncatewords:5 }}</span>
+            </div>
+
+            <header class="article-header">
+                <span class="category-badge">{{ article.category.name }}</span>
+                <h1>{{ article.title }}</h1>
+
+                <div class="article-meta">
+                    <div class="author-info">
+                        <div class="author-avatar">{{ article.author.username|slice:":1"|upper }}</div>
+                        <div>
+                            <div class="author-name">{{ article.author.username }}</div>
+                            <div class="article-date">{{ article.created_at|date:"d M, Y H:i" }}</div>
+                        </div>
+                    </div>
+                    <div class="article-stats">
+                        👁 {{ article.views }} ko'rildi
+                    </div>
+                </div>
+            </header>
+
+            {% if article.image %}
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="article-image">
+            {% endif %}
+
+            <div class="article-content">
+                <p class="lead">{{ article.summary }}</p>
+
+                {{ article.content|linebreaks }}
+            </div>
+        </article>
+
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3 class="widget-title">O'xshash maqolalar</h3>
+                <div class="widget-list">
+                    {% for related in related_articles %}
+                    <article class="widget-item">
+                        <a href="{% url 'project:article_detail' related.slug %}">
+                            {% if related.image %}
+                            <img src="{{ related.image.url }}" alt="{{ related.title }}">
+                            {% endif %}
+                            <div class="widget-content">
+                                <h4>{{ related.title|truncatewords:8 }}</h4>
+                                <span class="widget-date">{{ related.created_at|date:"d M" }}</span>
+                            </div>
+                        </a>
+                    </article>
+                    {% empty %}
+                    <p>O'xshash maqolalar yo'q</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}
